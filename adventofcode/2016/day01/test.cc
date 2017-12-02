@@ -1,7 +1,37 @@
+/*
+
+http://adventofcode.com/2016/day/1
+
+--- Day 1: No Time for a Taxicab ---
+
+Santa's sleigh uses a very high-precision clock to guide its movements, and the clock's oscillator is regulated by stars. Unfortunately, the stars have been stolen... by the Easter Bunny. To save Christmas, Santa needs you to retrieve all fifty stars by December 25th.
+
+Collect stars by solving puzzles. Two puzzles will be made available on each day in the advent calendar; the second puzzle is unlocked when you complete the first. Each puzzle grants one star. Good luck!
+
+You're airdropped near Easter Bunny Headquarters in a city somewhere. "Near", unfortunately, is as close as you can get - the instructions on the Easter Bunny Recruiting Document the Elves intercepted start here, and nobody had time to work them out further.
+
+The Document indicates that you should start at the given coordinates (where you just landed) and face North. Then, follow the provided sequence: either turn left (L) or right (R) 90 degrees, then walk forward the given number of blocks, ending at a new intersection.
+
+There's no time to follow such ridiculous instructions on foot, though, so you take a moment and work out the destination. Given that you can only walk on the street grid of the city, how far is the shortest path to the destination?
+
+For example:
+
+Following R2, L3 leaves you 2 blocks East and 3 blocks North, or 5 blocks away.
+R2, R2, R2 leaves you 2 blocks due South of your starting position, which is 2 blocks away.
+R5, L5, R5, R3 leaves you 12 blocks away.
+How many blocks away is Easter Bunny HQ?
+
+Your puzzle answer was 161.
+
+The first half of this puzzle is complete! It provides one gold star: *
+
+ */
+
 #include <stdio.h>
 #include <assert.h>
 #include <vector>
 #include <string>
+#include <unordered_map>
 
 using namespace std;
 
@@ -26,6 +56,14 @@ string get_direction_string(direction input)
   }
   assert(false);
 }
+
+struct KeyHasher
+{
+  size_t operator()(const pair<int, int>& k) const
+  {
+    return (k.first << 16 | k.second);
+  }
+};
 
 class Engine
 {
@@ -139,6 +177,83 @@ public:
     return cur_position;
   }
 
+  bool visited_twice(pair<int, int> cur_position,
+                     pair<int, int> instruction,
+                     unordered_map<pair<int, int>, bool, KeyHasher>& trail,
+                     pair<int, int>& colision_point)
+  {
+    pair<int, int> candidate = cur_position;
+    if (instruction.first == 0) {
+      assert(instruction.second != 0);
+      if (instruction.second > 0) {
+        for (int i = 1; i <= instruction.second; i++) {
+          candidate = make_pair(cur_position.first, cur_position.second + i);
+          if (trail.find(candidate) != trail.end()) {
+            colision_point = candidate;
+            return true;
+          }
+          trail[candidate] = true;
+        }
+      } else {
+        for (int i = 1; i <= -1 * instruction.second; i++) {
+          candidate = make_pair(cur_position.first, cur_position.second - i);
+          if (trail.find(candidate) != trail.end()) {
+            colision_point = candidate;
+            return true;
+          }
+          trail[candidate] = true;
+        }
+      }
+      return false;
+    }
+
+    assert(instruction.second == 0);
+
+    if (instruction.first > 0) {
+      for (int i = 1; i <= instruction.first; i++) {
+        candidate = make_pair(cur_position.first + i, cur_position.second);
+        if (trail.find(candidate) != trail.end()) {
+          colision_point = candidate;
+          return true;
+        }
+        trail[candidate] = true;
+      }
+    } else {
+      for (int i = 1; i <= -1 * instruction.first; i++) {
+        candidate = make_pair(cur_position.first - i, cur_position.second);
+        if (trail.find(candidate) != trail.end()) {
+          colision_point = candidate;
+          return true;
+        }
+        trail[candidate] = true;
+      }
+    }
+    return false;
+  }
+
+  // x and y coordinations after solving the puzzle
+  pair<int, int> solve_puzzle_2()
+  {
+    unordered_map<pair<int, int>, bool, KeyHasher> trail;
+    direction cur_direction(north);
+    int       cur_offset = 0;
+    pair<int, int> cur_position = make_pair(0, 0);
+    pair<int, int> colision_point = make_pair(-100000, -100000);
+    trail[make_pair(0, 0)] = true;
+    for (;;) {
+      pair<int, int> instruction = get_instruction(cur_offset, cur_direction);
+      if (instruction.first == 0 && instruction.second == 0) break;
+      if (visited_twice(cur_position, instruction, trail, colision_point)) {
+        return colision_point;
+      }
+      cur_position.first +=  instruction.first;
+      cur_position.second += instruction.second;
+      // printf("<%d, %d>\n", cur_position.first, cur_position.second);
+    }
+
+    return colision_point;
+  }
+
 public:
 
   string _data;
@@ -151,7 +266,8 @@ int main()
 
   Engine engine(data);
   pair<int, int> result = engine.solve_puzzle();
+  printf("Part 1 Result = <%d, %d>\n", result.first, result.second);
 
-  printf("Data: %s\n", data.c_str());
-  printf("Result = <%d, %d>\n", result.first, result.second);
+  result = engine.solve_puzzle_2();
+  printf("Part 1 Result = <%d, %d>\n", result.first, result.second);
 }

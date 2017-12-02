@@ -2,15 +2,17 @@
 #include <assert.h>
 #include <stdio.h>
 
+#include <algorithm>
 #include <fstream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 using namespace std;
 
 // For example: get_lines("./test.txt")
-vector<string> get_lines(string path)
+vector<string> get_lines(string path="data.txt")
 {
   vector<string> result;
   ifstream infile(path);
@@ -79,3 +81,11 @@ vector<int> get_numbers(string line, int base=10)
 
   return numbers;
 }
+
+struct PairHasher
+{
+  size_t operator()(const pair<int, int>& k) const
+  {
+    return (k.first << 16 | k.second);
+  }
+};

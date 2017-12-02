@@ -6,6 +6,7 @@
 
 using namespace std;
 
+// Note: we should really be using GCD algorithm but this will do for this homework
 pair<int, int> get_next_term(pair<int, int> first, pair<int, int> second)
 {
   int top = first.first + second.first + 1;

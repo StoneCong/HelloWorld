@@ -3,8 +3,11 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# binary output files
+
 # C extensions
 *.so
+*.out
 
 # Distribution / packaging
 .Python

@@ -43,7 +43,7 @@ string get_target(string line)
 int get_line_result(string line)
 {
   string chars = get_chars(line);
-  printf("%s\n", chars.c_str());
+  // printf("%s\n", chars.c_str());
   unordered_map<char, int> dict;
   for (auto e: chars) {
     if (dict.find(e) == dict.end()) {
@@ -66,15 +66,53 @@ int get_line_result(string line)
     if (top_five_string.size() == 5) break;
   }
 
-  printf("%s\n", top_five_string.c_str());
+  // printf("%s\n", top_five_string.c_str());
   string target = get_target(line);
-  printf("%s\n", target.c_str());
+  // printf("%s\n", target.c_str());
 
   if (top_five_string == target) {
     return get_checksum(line);
   }
 
   return 0;
+}
+
+char get_clear_char(char c, int shift_count)
+{
+  int result = c - 'a';
+  result += shift_count;
+  result %= 26;
+  return result + 'a';
+}
+
+string get_message(string line, int shift_count)
+{
+  string result;
+
+  for (auto e: line) {
+    if (isalpha(e)) {
+      result += get_clear_char(e, shift_count);
+      continue;
+    }
+    if (e == '-') {
+      result += ' ';
+      continue;
+    }
+    if (isdigit(e)) break;
+  }
+
+  return result;
+}
+
+void get_clear_texts(const vector<string>& data,
+                     vector<pair<string, int>>& clear_texts)
+{
+  for (auto e: data) {
+    int sector = get_checksum(e);
+    string message = get_message(e, sector);
+    clear_texts.push_back(make_pair(message, sector));
+  }
+  return;
 }
 
 int main()
@@ -95,4 +133,12 @@ int main()
   }
 
   printf("Result = %d\n", sum);
+
+  // part II: decipher the message
+  vector<pair<string, int>> clear_texts;
+  get_clear_texts(data, clear_texts);
+
+  for (auto e: clear_texts) {
+    printf("%s: %d\n", e.first.c_str(), e.second);
+  }
 }

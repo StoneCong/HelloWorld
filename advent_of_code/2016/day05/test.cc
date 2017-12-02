@@ -39,13 +39,13 @@ string get_code_part_2(string base)
       }
     }
     if (!found) continue;
-    printf("Result (%s) = %s\n", text.c_str(), hash_result.c_str());
     int position = hash_result[5] - '0';
     if (position < 0 || position > 7) {
       continue;
     }
     if (code[position] != 'x') continue;
     code[position] = hash_result[6];
+    printf("Code: %s\n", code.c_str());
     found = false;
     for (auto e: code) {
       if (e == 'x') {

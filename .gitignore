@@ -4,10 +4,10 @@ __pycache__/
 *$py.class
 
 # binary output files
+*.out
 
 # C extensions
 *.so
-*.out
 
 # Distribution / packaging
 .Python

@@ -68,7 +68,7 @@ bool has_pattern(vector<string>& texts)
   return false;
 }
 
-int main()
+int part_1()
 {
   vector<string> data = get_lines();
   int count = 0;
@@ -86,7 +86,65 @@ int main()
     }
   }
 
-  cout << "Result: " << count << "\n";
+  cout << "Part 1 Result: " << count << "\n";
+  return 0;
+}
 
+vector<string> get_xyx_set(const vector<string>& texts)
+{
+  vector<string> result;
+
+  for (auto e: texts) {
+    for (int i = 0; i < e.size() - 2; i++) {
+      if (e[i] != e[i + 2]) continue;
+      result.push_back(e.substr(i, 3));
+    }
+  }
+
+  return result;
+}
+
+bool has_element(const vector<string>& texts, string pattern)
+{
+  for (auto e: texts) {
+    if (e.find(pattern) != string::npos) return true;
+  }
+  return false;
+}
+
+int part_2()
+{
+  vector<string> data = get_lines();
+  int count = 0;
+
+  for (auto e: data) {
+    vector<string> texts;
+    vector<string> hyper_texts;
+    get_parts(e, texts, hyper_texts);
+    vector<string> xyx_set = get_xyx_set(hyper_texts);
+    bool found = false;
+    for (auto element : xyx_set) {
+      string new_element;
+      new_element.append(1, element[1]);
+      new_element.append(1, element[0]);
+      new_element.append(1, element[1]);
+      if (has_element(texts, new_element)) {
+        found = true;
+        break;
+      }
+    }
+    if (found) {
+      count++;
+    }
+  }
+
+  cout << "Part 2 Result: " << count << "\n";
+  return 0;
+}
+
+int main()
+{
+  part_1();
+  part_2();
   return 0;
 }

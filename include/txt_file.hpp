@@ -13,7 +13,6 @@
 
 using namespace std;
 
-// For example: get_lines("./test.txt")
 vector<string> get_lines(string path="data.txt")
 {
   vector<string> result;
@@ -75,7 +74,9 @@ vector<int> get_numbers(string line, int base=10)
   return numbers;
 }
 
-vector<string> get_words(string line)
+typedef int (*my_filter)(int);
+
+vector<string> get_terms_internal(string line, my_filter filter_func)
 {
   vector<string> words;
   bool processing = false;
@@ -83,14 +84,14 @@ vector<string> get_words(string line)
   for (int i = 0; i < line.size(); i++) {
     char c = line[i];
     if (!processing) {
-      if (isalpha(c)) {
+      if (filter_func(c)) {
         processing = true;
         word.clear();
         word.append(1, c);
       }
       continue;
     }
-    if (isalpha(c)) {
+    if (filter_func(c)) {
       word.append(1, c);
       continue;
     }
@@ -103,32 +104,32 @@ vector<string> get_words(string line)
   return words;
 }
 
-vector<string> get_terms(string line)
+inline vector<string> get_words(string line)
 {
-  vector<string> words;
-  bool processing = false;
-  string word;
-  for (int i = 0; i < line.size(); i++) {
-    char c = line[i];
-    if (!processing) {
-      if (isalnum(c)) {
-        processing = true;
-        word.clear();
-        word.append(1, c);
-      }
-      continue;
-    }
-    if (isalnum(c)) {
-      word.append(1, c);
-      continue;
-    }
-    processing = false;
-    words.push_back(word);
+  return get_terms_internal(line, isalpha);
+}
+
+inline vector<string> get_terms(string line)
+{
+  return get_terms_internal(line, isalnum);
+}
+
+int custom_filter(int c)
+{
+  string extra_valid_chars = "_";
+
+  if (isalnum(c)) return true;
+
+  for (auto e: extra_valid_chars) {
+    if (e == c) return true;
   }
-  if (processing) {
-    words.push_back(word);
-  }
-  return words;
+
+  return false;
+}
+
+inline vector<string> get_custom_words(string line)
+{
+  return get_terms_internal(line, custom_filter);
 }
 
 struct PairHasher

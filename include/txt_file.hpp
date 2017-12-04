@@ -132,6 +132,35 @@ inline vector<string> get_custom_words(string line)
   return get_terms_internal(line, custom_filter);
 }
 
+void split_line(string line, string delim, string& first, string& second)
+{
+  size_t pos = line.find(delim);
+  if (pos == string::npos) {
+    first = line;
+    second.clear();
+    return;
+  }
+  first = line.substr(0, pos);
+  second = line.substr(pos + delim.size());
+}
+
+vector<string> split_line(string line, string delim)
+{
+  vector<string> result;
+
+  for (;;) {
+    size_t pos = line.find(delim);
+    if (pos == string::npos) {
+      result.push_back(line);
+      break;
+    }
+    result.push_back(line.substr(0, pos));
+    line = line.substr(pos + delim.size());
+  }
+
+  return result;
+}
+
 struct PairHasher
 {
   size_t operator()(const pair<int, int>& k) const

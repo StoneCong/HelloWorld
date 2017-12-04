@@ -14,6 +14,14 @@ int main()
     terms = get_terms(e);
     custom_words = get_custom_words(e);
     cout << numbers.size() << " " << words.size() << " " << terms.size() << " "<< custom_words.size() << "\n";
+    string first, second;
+    split_line(e, "zzzz", first, second);
+    cout << first << "\n" << second << "\n\n";
+    vector<string> final = split_line(e, "a");
+    for (auto e: final) {
+      cout << e << "\n";
+    }
+    cout << "\n";
   }
   return 0;
 }

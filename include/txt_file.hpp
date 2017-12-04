@@ -103,6 +103,34 @@ vector<string> get_words(string line)
   return words;
 }
 
+vector<string> get_terms(string line)
+{
+  vector<string> words;
+  bool processing = false;
+  string word;
+  for (int i = 0; i < line.size(); i++) {
+    char c = line[i];
+    if (!processing) {
+      if (isalnum(c)) {
+        processing = true;
+        word.clear();
+        word.append(1, c);
+      }
+      continue;
+    }
+    if (isalnum(c)) {
+      word.append(1, c);
+      continue;
+    }
+    processing = false;
+    words.push_back(word);
+  }
+  if (processing) {
+    words.push_back(word);
+  }
+  return words;
+}
+
 struct PairHasher
 {
   size_t operator()(const pair<int, int>& k) const

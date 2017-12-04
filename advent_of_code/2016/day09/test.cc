@@ -104,8 +104,6 @@ void expand_data(map<long long, string>& data, long long& file_size)
 
   //  track the markers and eof using a dict instead of saving the raw data
   // (6x6)AFPLBX(2x3)ZE(53x13)(4x7)ZGQO(2x4)
-  // TBD: construct the initial dict to track all the markers and then feed it
-  //      to a loop until all the markers are resolved
   for (auto e: data) {
     // cout << e.first << ": " << e.second << "\n";
     vector<int> numbers = get_numbers(e.second);
@@ -151,12 +149,11 @@ void part_2()
   vector<string> data = get_lines();
   assert (data.size() == 1);
   cout << "part 2 result: " << get_length(data[0]) << "\n";
-  // if (!contain_marker(new_result)) break;
 }
 
 int main()
 {
-  // part_1();
+  part_1();
   part_2();
   return 0;
 }

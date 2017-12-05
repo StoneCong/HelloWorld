@@ -1,27 +1,30 @@
+/*
+  http://adventofcode.com/2017/day/5
+ */
+
 #include "../../../include/txt_file.hpp"
 
 int main()
 {
-  vector<int> numbers;
-  vector<string> words;
-  vector<string> terms;
-  vector<string> custom_words;
   vector<string> data = get_lines();
+  vector<int> instructions;
   for (auto e: data) {
-    // 234 456 dasd 234 abc888
-    numbers = get_numbers(e);
-    words = get_words(e);
-    terms = get_terms(e);
-    custom_words = get_custom_words(e);
-    cout << numbers.size() << " " << words.size() << " " << terms.size() << " "<< custom_words.size() << "\n";
-    string first, second;
-    split_line(e, "zzzz", first, second);
-    cout << first << "\n" << second << "\n\n";
-    vector<string> final = split_line(e, "a");
-    for (auto e: final) {
-      cout << e << "\n";
-    }
-    cout << "\n";
+    int number = stoi(e);
+    instructions.push_back(number);
+    cout << number << "\n";
   }
+  int steps = 0;
+  int cur = 0;
+  for (;;) {
+    if (cur < 0 || cur >= instructions.size()) break;
+    int inst = instructions[cur];
+    if (inst >= 3)
+      instructions[cur]--;
+    else
+      instructions[cur]++;
+    cur += inst;
+    steps++;
+  }
+  cout << "steps: " << steps << "\n";
   return 0;
 }

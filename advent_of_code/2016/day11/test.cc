@@ -11,6 +11,11 @@ void print_graph(vector<vector<int>>& data)
   }
 }
 
+bool is_valid_row(vector<int>> input)
+{
+  return true;
+}
+
 void get_valid_next_states(const vector<vector<int>>& current,
                            vector<vector<vector<int>>>& states)
 {
@@ -19,6 +24,47 @@ void get_valid_next_states(const vector<vector<int>>& current,
   // choose which item(s) to carry
   // check if the new state is valid
   // if valid, insert into states
+  states.clear();
+  int elevator_row = -1;
+  int index = 0;
+  for (auto e: current) {
+    for (auto n: e) {
+      if (n == -1) {
+        elevator_row = index;
+      }
+    }
+    index++;
+  }
+  assert(elevator_row != -1);
+  vector<int> row = current[elevator_row];
+  vector<int> row_below;
+
+  // carry 1 item up
+  if (eleveator_row < 3) {
+    for (auto e: row) {
+      vector<int> row_above = current[elevator_row + 1];
+      row_above.push_back(e);
+      row_above.push_back(-1);
+      sort(row_above.begin(), row_above.end());
+      if (!is_valid_row(row_above)) continue;
+      vector<int> new_row;
+      for (auto element: row) {
+        if (element == -1 || element == e) continue;
+        new_row.push_back(element);
+      }
+      sort(new_row.begin(), new_row.end());
+      if (!is_valid_row(new_row)) continue;
+      vector<vector<int>> new_state = current;
+      new_state[elevator_row] = new_row;
+      new_state[elevator_row + 1] = row_above;
+      states.push_back(new_state);
+    }
+  }
+  // carry 1 item down
+
+  // carry 2 items up
+
+  // carry 2 items down
 }
 
 void process_state(vector<vector<int>> current,

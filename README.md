@@ -1,5 +1,5 @@
-# HelloWorld
+# Advent of Code
 
-This is a test file to show how to use github!
+https://adventofcode.com/
 
-By Stone Cong @ 2016/04/29
+Timed exercise with questions above.

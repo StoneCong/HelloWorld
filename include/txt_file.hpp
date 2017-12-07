@@ -24,6 +24,7 @@ vector<string> get_lines(string path="data.txt")
   string line;
   while (getline(infile, line)) {
     result.push_back(line);
+    cout << line << endl;
   }
   return result;
 }

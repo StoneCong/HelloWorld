@@ -52,14 +52,12 @@ int main()
     update_number(e, dict, max_ever);
   }
 
-  int max = INT_MIN;
+  int max_result = INT_MIN;
   for (auto e: dict) {
-    if (e.second > max) {
-      max = e.second;
-    }
+    max_result = max(max_result, e.second);
   }
-  cout << "max result: " << max      <<  endl;
-  cout << "max ever:   " << max_ever <<  endl;
+  cout << "max result: " << max_result <<  endl;
+  cout << "max ever:   " << max_ever   <<  endl;
 
   return 0;
 }

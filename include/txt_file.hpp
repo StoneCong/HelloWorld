@@ -122,13 +122,10 @@ inline vector<string> get_terms(string line)
 int custom_filter(int c)
 {
   string extra_valid_chars = "_";
-
   if (isalnum(c)) return true;
-
   for (auto e: extra_valid_chars) {
     if (e == c) return true;
   }
-
   return false;
 }
 
@@ -152,7 +149,6 @@ void split_line(string line, string delim, string& first, string& second)
 vector<string> split_line(string line, string delim)
 {
   vector<string> result;
-
   for (;;) {
     size_t pos = line.find(delim);
     if (pos == string::npos) {
@@ -162,20 +158,16 @@ vector<string> split_line(string line, string delim)
     result.push_back(line.substr(0, pos));
     line = line.substr(pos + delim.size());
   }
-
   return result;
 }
 
 int signed_number_filter(int c)
 {
   string extra_valid_chars = "-";
-
   if (isdigit(c)) return true;
-
   for (auto e: extra_valid_chars) {
     if (e == c) return true;
   }
-
   return false;
 }
 

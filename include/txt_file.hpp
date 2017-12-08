@@ -166,6 +166,28 @@ vector<string> split_line(string line, string delim)
   return result;
 }
 
+int signed_number_filter(int c)
+{
+  string extra_valid_chars = "-";
+
+  if (isdigit(c)) return true;
+
+  for (auto e: extra_valid_chars) {
+    if (e == c) return true;
+  }
+
+  return false;
+}
+
+vector<int> get_signed_numbers(string line)
+{
+  vector<int> numbers;
+  for (auto e: get_terms_internal(line, signed_number_filter)) {
+    numbers.push_back(stoi(e));
+  }
+  return numbers;
+}
+
 struct PairHasher
 {
   size_t operator()(const pair<int, int>& k) const

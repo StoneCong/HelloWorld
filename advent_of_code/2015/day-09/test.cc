@@ -33,6 +33,19 @@ int get_shortest_route(const vector<string>& cities, const map<pair<string, stri
   return shortest_route;
 }
 
+int get_longest_route(const vector<string>& cities, const map<pair<string, string>, int>& dict)
+{
+  // get all the permutations of cities and check which one is shortest
+  vector<vector<int>> permutations = get_permutations(cities.size());
+  int longest_route = 0;
+  for (auto p: permutations) {
+    int cost = get_path_cost(p, cities, dict);
+    if (cost == INT_MAX) continue;
+    longest_route = max(longest_route, cost);
+  }
+  return longest_route;
+}
+
 int main(int arg, const char* argv[])
 {
   vector<string> data = get_lines(arg == 1 ? "data.txt" : "real.txt");
@@ -47,5 +60,6 @@ int main(int arg, const char* argv[])
     add_city(words[2], cities);
   }
   cout << get_shortest_route(cities, dict) << endl;
+  cout << get_longest_route(cities, dict) << endl;
   return 0;
 }

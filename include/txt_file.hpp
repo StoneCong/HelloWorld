@@ -1,4 +1,3 @@
-
 #include <assert.h>
 #include <stdio.h>
 
@@ -179,6 +178,42 @@ vector<int> get_signed_numbers(string line)
     numbers.push_back(stoi(e));
   }
   return numbers;
+}
+
+vector<vector<int>> get_permutations(int size)
+{
+  vector<vector<int>> permutations;
+  vector<int> permutation;
+  for (int i = 0; i < size; i++) {
+    permutation.push_back(i);
+  }
+  permutations.push_back(permutation);
+  for (;;) {
+    bool done = true;
+    // Find greatest index 'i' within string such that v[i] < v[i+1]
+    // If cannot find any such index, this is the last permutation.
+    for (int i = size - 2; i >= 0; i--) {
+      if (permutation[i] < permutation[i+1]) {
+        // Find greatest index 'p' where v[i] < v[p]
+        for (int j = size - 1; j > i; j--) {
+          if (permutation[j] > permutation[i]) {
+            // swap i and j
+            int temp = permutation[i];
+            permutation[i] = permutation[j];
+            permutation[j] = temp;
+            // reverse the content from i + 1 to end
+            reverse(permutation.begin() + i + 1, permutation.end());
+            permutations.push_back(permutation);
+            done = false;
+            break;
+          }
+        }
+        break;
+      }
+    }
+    if (done) break;
+  }
+  return permutations;
 }
 
 struct PairHasher

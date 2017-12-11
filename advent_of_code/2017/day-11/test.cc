@@ -2,12 +2,10 @@
 
 int get_steps(map<string, int>& dict)
 {
-  int n_count = dict["n"] - dict["s"];
-  int nw_count = dict["nw"] - dict["se"];
-  int sw_count = dict["sw"] - dict["ne"];
-
-  int min_common = min(min(abs(n_count),  abs(sw_count)),
-                       min(abs(sw_count), abs(nw_count)));
+  int n_count    = dict["n"] - dict["s"];
+  int nw_count   = dict["nw"] - dict["se"];
+  int sw_count   = dict["sw"] - dict["ne"];
+  int min_common = min({abs(n_count), abs(sw_count), abs(nw_count)});
 
   if (min_common == 0) return abs(n_count) + abs(sw_count) + abs(nw_count);
 

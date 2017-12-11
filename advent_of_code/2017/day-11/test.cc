@@ -31,11 +31,7 @@ int main()
   vector<string> terms = get_terms(data[0]);
   int max_steps = 0;
   for (auto e: terms) {
-    if (dict.find(e) == dict.end()) {
-      dict[e] = 1;
-    } else {
-      dict[e]++;
-    }
+    dict[e]++;
     max_steps = max(max_steps, get_steps(dict));
   }
   cout << "steps: " << get_steps(dict) << endl;

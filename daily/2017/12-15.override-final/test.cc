@@ -44,6 +44,22 @@ public:
 
 };
 
+class Further_Derived final : public Base {
+};
+
+/*
+class New_Derived : public Further_Derived {
+};
+
+test.cc:50:28: error: base 'Further_Derived' is marked 'final'
+class New_Derived : public Further_Derived {
+                           ^
+test.cc:47:7: note: 'Further_Derived' declared here
+class Further_Derived final : public Base {
+      ^               ~~~~~
+1 error generated.
+*/
+
 int main()
 {
   cout << "test override and final in c++ 11" << endl;

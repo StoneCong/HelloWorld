@@ -15,6 +15,7 @@
 #include <stack>
 #include <string>
 #include <tuple>
+#include <typeinfo>
 #include <unordered_map>
 #include <vector>
 

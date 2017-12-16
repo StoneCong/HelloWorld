@@ -220,6 +220,7 @@ vector<vector<int>> get_permutations(int size)
   return permutations;
 }
 
+// function object for hashing
 struct PairHasher
 {
   size_t operator()(const pair<int, int>& k) const
@@ -227,3 +228,21 @@ struct PairHasher
     return (k.first << 16 | k.second);
   }
 };
+
+inline void print_vector(vector<int>& v)
+{
+  cout << "v(" << v.size() << "):";
+  for (auto e: v) {
+    cout << " " << e;
+  }
+  cout << endl;
+}
+
+inline void print_vector(vector<string>& v)
+{
+  cout << "v(" << v.size() << "):";
+  for (auto e: v) {
+    cout << " \"" << e << "\"";
+  }
+  cout << endl;
+}

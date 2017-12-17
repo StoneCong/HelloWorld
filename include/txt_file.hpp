@@ -6,6 +6,7 @@
 #include <cmath>
 #include <complex>
 #include <fstream>
+#include <future>
 #include <iostream>
 #include <iomanip>
 #include <map>

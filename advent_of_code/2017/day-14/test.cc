@@ -129,33 +129,14 @@ void part_2()
     vector<int> line = data[row];
     int col = 0;
     for (int cur = 0; cur < line.size(); cur++) {
-      dict[make_pair(row, col + 0)] = get_bit(line[cur], 3);
-      dict[make_pair(row, col + 1)] = get_bit(line[cur], 2);
-      dict[make_pair(row, col + 2)] = get_bit(line[cur], 1);
-      dict[make_pair(row, col + 3)] = get_bit(line[cur], 0);
+      dict[make_pair(row, col + 0)] = get_bit(line[cur], 0);
+      dict[make_pair(row, col + 1)] = get_bit(line[cur], 1);
+      dict[make_pair(row, col + 2)] = get_bit(line[cur], 2);
+      dict[make_pair(row, col + 3)] = get_bit(line[cur], 3);
       col += 4;
     }
     assert(col == 128);
   }
-
-  assert(dict[make_pair(0, 0)]);
-  assert(dict[make_pair(0, 4)]);
-  assert(dict[make_pair(1, 1)]);
-  assert(dict[make_pair(1, 3)]);
-  assert(dict[make_pair(2, 0)]);
-  assert(dict[make_pair(2, 6)]);
-  assert(dict[make_pair(3, 1)]);
-  assert(dict[make_pair(3, 7)]);
-
-  assert(!dict[make_pair(0, 3)]);
-  assert(!dict[make_pair(0, 15)]);
-  assert(!dict[make_pair(1, 0)]);
-  assert(!dict[make_pair(1, 4)]);
-  assert(!dict[make_pair(2, 1)]);
-  assert(!dict[make_pair(2, 7)]);
-  assert(!dict[make_pair(3, 2)]);
-  assert(!dict[make_pair(3, 3)]);
-
 
   int region_count = 0;
   for (int row = 0; row < 128; row++) {
@@ -179,6 +160,7 @@ void part_2()
     }
   }
 
+  assert(region_count == 1074);
   cout << region_count << endl;
   return;
 }

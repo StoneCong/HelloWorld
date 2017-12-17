@@ -37,19 +37,19 @@ void part_1()
   cout << numbers[0] * numbers[1] << endl;
 }
 
-void part_2()
+string part_2(string data)
 {
   int skip = 0;
   int cur = 0;
   vector<int> numbers;
-  vector<string> data = get_lines();
   vector<int> input;
+  char buffer[64];
 
   for (int i = 0; i < 256; i++) {
     numbers.push_back(i);
   }
 
-  for (auto e: data[0]) {
+  for (auto e: data) {
     input.push_back(e);
   }
 
@@ -76,16 +76,17 @@ void part_2()
     dense.push_back(value);
   }
 
-  cout << "hash result: ";
-  for (auto e: dense) {
-    printf("%2x", e);
+  for (int i = 0; i < dense.size(); i++) {
+    sprintf(buffer + i*2, "%02x", dense[i]);
   }
-  cout << endl;
+
+  return buffer;
 }
 
 int main()
 {
+  vector<string> data = get_lines();
   part_1();
-  part_2();
+  cout << "hash of " << data[0] << " == " << part_2(data[0]);
   return 0;
 }

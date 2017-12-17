@@ -33,26 +33,28 @@ vector<string> get_lines(string path="data.txt")
   return result;
 }
 
-bool is_num_digit(char c, int base)
+bool is_num_digit(char cur, int base)
 {
+  cur = toupper(cur);
   if (base <= 10) {
-    if (c < '0') return false;
-    return (c <= '0' + base - 1);
+    if (cur < '0') return false;
+    return (cur <= '0' + base - 1);
   }
   assert(base > 10 && base <= 16);
-  if (c <= '9' && c >= '0') return true;
-  return (c <= 'A' + base - 11 && c >= 'A');
+  if (cur <= '9' && cur >= '0') return true;
+  return (cur <= 'A' + base - 11 && cur >= 'A');
 }
 
-int get_digit(char c, int base)
+int get_digit(char cur, int base)
 {
-  assert(is_num_digit(c, base));
+  cur = toupper(cur);
+  assert(is_num_digit(cur, base));
   if (base <= 10) {
-    return c - '0';
+    return cur - '0';
   }
   assert(base > 10 && base <= 16);
-  if (c <= '9' && c >= '0') return c - '0';
-  return c - 'A' + 10;
+  if (cur <= '9' && cur >= '0') return cur - '0';
+  return cur - 'A' + 10;
 }
 
 vector<int> get_numbers(string line, int base=10)

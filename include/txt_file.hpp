@@ -12,6 +12,7 @@
 #include <iomanip>
 #include <map>
 #include <queue>
+#include <random>
 #include <set>
 #include <sstream>
 #include <stack>
@@ -249,4 +250,13 @@ inline void print_vector(vector<string>& v)
     cout << " \"" << e << "\"";
   }
   cout << endl;
+}
+
+inline int get_random_number(int low, int high)
+{
+  // [low, high)
+  random_device rd;
+  mt19937 mt(rd());
+  uniform_real_distribution<double> dist(low * 1.0, high * 1.0);
+  return dist(mt);
 }

@@ -148,12 +148,9 @@ void worker(int process_id, vector<queue<int>>& queues, mutex& m)
 
 int main()
 {
-  vector<thread> threads;
-  vector<queue<int>> queues;
-  queue<int> temp;
-  queues.push_back(temp);
-  queues.push_back(temp);
   mutex m;
+  vector<thread> threads;
+  vector<queue<int>> queues(2, queue<int>());
   for (int i = 0; i < 2; i++) {
     threads.push_back(thread(worker, i, ref(queues), ref(m)));
   }

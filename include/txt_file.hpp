@@ -234,13 +234,24 @@ struct PairHasher
   }
 };
 
-inline void print_vector(vector<int>& v)
+template<typename T>
+inline void print_vector(vector<T>& v)
 {
   cout << "v(" << v.size() << "):";
   for (auto e: v) {
     cout << " " << e;
   }
   cout << endl;
+}
+
+inline void print_vector(vector<int>& v)
+{
+  print_vector<int>(v);
+}
+
+inline void print_vector(vector<long long>& v)
+{
+  print_vector<long long>(v);
 }
 
 inline void print_vector(vector<string>& v)

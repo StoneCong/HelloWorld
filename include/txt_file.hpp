@@ -271,3 +271,39 @@ inline int get_random_number(int low, int high)
   uniform_real_distribution<double> dist(low * 1.0, high * 1.0);
   return dist(mt);
 }
+
+enum direction {
+  N = 0,
+  E = 1,
+  S = 2,
+  W = 3
+};
+
+direction turn_right(direction cur_dir)
+{
+  return (direction)((cur_dir + 1) % 4);
+}
+
+direction turn_left(direction cur_dir)
+{
+  return (direction)((cur_dir + 3) % 4);
+}
+
+// cur_pos.first:  row
+// cur_pos.second: column
+pair<int, int> next_location(pair<int, int> cur_pos, direction d)
+{
+  switch (d) {
+  case N:
+    return make_pair(cur_pos.first - 1, cur_pos.second);
+  case S:
+    return make_pair(cur_pos.first + 1, cur_pos.second);
+  case W:
+    return make_pair(cur_pos.first, cur_pos.second - 1);
+  case E:
+    return make_pair(cur_pos.first, cur_pos.second + 1);
+  }
+  cout << d << endl;
+  assert(false);
+  return make_pair(0, 0);
+}

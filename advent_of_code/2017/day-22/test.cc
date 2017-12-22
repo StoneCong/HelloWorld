@@ -1,45 +1,11 @@
 #include "../../../include/txt_file.hpp"
 
-enum direction {
-  N = 0,
-  E = 1,
-  S = 2,
-  W = 3
-};
-
 enum state {
   Clean = 0,
   Weakened = 1,
   Infected = 2,
   Flagged = 3
 };
-
-direction turn_right(direction cur)
-{
-  return (direction)((cur + 1) % 4);
-}
-
-direction turn_left(direction cur)
-{
-  return (direction)((cur + 3) % 4);
-}
-
-pair<int, int> next_location(pair<int, int> cur_pos, direction d)
-{
-  switch (d) {
-  case N:
-    return make_pair(cur_pos.first - 1, cur_pos.second);
-  case S:
-    return make_pair(cur_pos.first + 1, cur_pos.second);
-  case W:
-    return make_pair(cur_pos.first, cur_pos.second - 1);
-  case E:
-    return make_pair(cur_pos.first, cur_pos.second + 1);
-  }
-  cout << d << endl;
-  assert(false);
-  return make_pair(0, 0);
-}
 
 int main()
 {

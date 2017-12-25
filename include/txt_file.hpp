@@ -263,6 +263,15 @@ inline void print_vector(vector<string>& v)
   cout << endl;
 }
 
+inline void print_vector(vector<pair<int, int>>& v)
+{
+  cout << "v(" << v.size() << "):";
+  for (auto e: v) {
+    cout << " (" << e.first << ","<< e.second << ")";
+  }
+  cout << endl;
+}
+
 inline int get_random_number(int low, int high)
 {
   // [low, high)

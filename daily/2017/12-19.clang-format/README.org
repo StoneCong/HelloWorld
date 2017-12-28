@@ -1,0 +1,6 @@
+
+* build instruction
+
+process a messy source file:   clang-format messy.cc > output.cc
+check the differences:         vimdiff messy.cc output.cc
+build the project:             mkdir build && cd build && cmake .. && make

@@ -7,4 +7,5 @@ int main()
   array = (int *)malloc(sizeof(int) * 10);
   printf("addr = %p\n", array);
   // free(array);  <== cause memory leak!
+  free(array);
 }

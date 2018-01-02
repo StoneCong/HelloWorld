@@ -1,0 +1,12 @@
+
+* Compile proto file
+
+test@test-VirtualBox:~/src/advent_of_code/daily/2018/01-02.proto-buff$ protoc protoline.proto --cpp_out=.
+
+test@test-VirtualBox:~/src/advent_of_code/daily/2018/01-02.proto-buff$ ls -la
+total 76
+drwxrwxr-x 2 test test  4096 Jan  2 15:20 .
+drwxrwxr-x 3 test test  4096 Jan  2 15:17 ..
+-rw-rw-r-- 1 test test 33285 Jan  2 15:20 protoline.pb.cc
+-rw-rw-r-- 1 test test 22928 Jan  2 15:20 protoline.pb.h
+-rw-rw-r-- 1 test test   312 Jan  2 15:18 protoline.proto
